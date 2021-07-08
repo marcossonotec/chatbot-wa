@@ -1,131 +1,69 @@
 
 
 
-let date = new Date();
-let data = date.toLocaleString('pt-BR', {timeZone: "America/Sao_Paulo", hour: 'numeric', hour12: false })
-
-function welcome (agent) {
-
-  if(data >= 5 && data <= 12)
-  agent.add('*iPhome Delivery*' +'\n'+'\n'+
-            'Bom dia, seja bem-vindo ao atendimento automatizado do iPhome Delivery!'+'\n'+'\n'+
-            'Digite INICIAR para fazer um pedido.')
+function uniqueID(){
+  function chr4(){
+    return Math.random().toString(16).slice(-6);
+  }
+  return chr4();
+}
   
-  else if(data >= 13 && data <= 18)
-  agent.add('*iPhome Delivery*' +'\n'+'\n'+
-            'Boa tarde, seja bem-vindo ao atendimento automatizado do iPhome Delivery!'+'\n'+'\n'+
-            'Digite INICIAR para fazer um pedido.')
+  let date = new Date();
+  let data = date.toLocaleString('pt-BR', {timeZone: "America/Sao_Paulo", hour: 'numeric', hour12: false });
+ 
+  function welcome(agent) {
+    if(data >=5 && data <=12)
+    agent.add('Oi 👩🏽‍🎤 Bom dia!' +'\n'+'\n'+
+             'Seja muito bem vindo(a) ao nosso chatbot para Whatsapp' +'\n'+'\n'+
+             'Digite *Iniciar* para se inscrever no *Sorteio*');
+    
+    else if(data >=13 && data <=18)
+      agent.add('Oi 👩🏽‍🎤 Boa tarde!' +'\n'+'\n'+
+             'Seja muito bem vindo(a) ao nosso chatbot para Whatsapp' +'\n'+'\n'+
+             'Digite *Iniciar* para se inscrever no *Sorteio*');
+    else 
+      agent.add('Oi 👩🏽‍🎤 Boa noite!' +'\n'+'\n'+
+             'Seja muito bem vindo(a) ao nosso chatbot para Whatsapp' +'\n'+'\n'+
+             'Digite *Iniciar* para se inscrever no *Sorteio*');
+  }
+
+
+//CADASTRO
+   function cadastro(agent) {
+    const {nome, idade, email, telefone} = agent.parameters;    
+    const data = [{
+    Nome: nome,
+        Idade: idade,
+    Email: email,
+    Telefone: telefone,
+        Data: new Date(),
+        Numero: uniqueID()
+    }];
+    axios.post("https://sheet.best/api/sheets/f5392bc1-db5c-4e34-9875-bc48b17af95f", data);
+    agent.add("Muito bem, o seu cadastro foi realizado com sucesso.");
+    agent.add("Para visualizar o seu número da sorte digite *OK*");
+   }
   
-  else
-  agent.add('*iPhome Delivery*' +'\n'+'\n'+
-            'Boa noite, seja bem-vindo ao atendimento automatizado do iPhome Delivery!'+'\n'+'\n'+
-            'Digite INICIAR para fazer um pedido.')
-}
-
-
-function iphome (agent) {
-const iPhome=agent.parameters.iPhome;
-const Especiais=agent.parameters.Especiais;
-const Bebidas=agent.parameters.Bebidas;
-var total=agent.parameters.total;
-total=0.00;
-//bebidas
-if(Bebidas =='Refrigerante 1L - R$5.00'){
-total=total+5.00; 
-}
-else if(Bebidas =='Refrigerante Lata - R$3.50'){
-total=total+3.50; 
-}
-else if(Bebidas =='Sem Bebida'){
-total=total+0.00; 
-}
-//petiscos
-if(iPhome ==='iPhome 7 - R$24.90'){
-total=total+24.90; 
-}
-else if(iPhome ==='iPhome 7 Plus - R$28.90'){
-total=total+28.90; 
-}
-else if(iPhome ==='iPhome 8 - R$32.90'){
-total=total+32.50; 
-}
-else if(iPhome ==='iPhome 8 Plus - R$35.90'){
-total=total+35.90; 
-}
-else if(iPhome ==='iPhome X - R$39.90'){
-total=total+39.90; 
-}
-//especiais
-if(Especiais =='Bolinha Carne Seca Banana - R$4.50'){
-total=total+4.50; 
-}
-else if(Especiais =='Salgados de Bacalhau - R$4.50'){
-total=total+4.50; 
-}
-else if(Especiais =='Sem Petisco Adicional'){
-total=total+0.00; 
-}
-var   Total  =  total . toFixed ( 2);
-var troco=agent.parameters.Troco -Total;
-if (agent.parameters.Pagamento == 'Dinheiro' && agent.parameters.Troco != '0')
-  troco= '- Troco: R$'+troco
-else 
-  troco = '- Sem Troco'; 
-  
-if(agent.parameters.Delivery =='Retirar')
-agent.add('Antes de encaminharmos seu pedido, confirme se está tudo certinho:' + '\n' + '\n' +
-      '*PEDIDO PARA RETIRADA*' + '\n' + 
-      '*TEMPO ESTIMADO: 15 À 30 MINUTOS*' + '\n' + '\n' +
-      '--------------------------------' + '\n' +
-      '*ITENS DO PEDIDO*' + '\n' +
-      '--------------------------------' + '\n' + 
-      '*TIPO:* '+agent.parameters.iPhome + '\n' +
-      '*CLIENTE:* ' + '\n' + 
-      '*BEBIDA:* '+agent.parameters.Bebidas + '\n' +
-      '*MOLHOS:* '+agent.parameters.Molhos.Molhos+'\n'+
-      '*PETISCOS:* '+agent.parameters.Petiscos.Petiscos+'\n'+
-      '*ESPECIAIS:* '+agent.parameters.Especiais +'\n'+ 
-      '*ENTREGA:* '+agent.parameters.Delivery	 + '\n' + '\n' +
-      '--------------------------------' + '\n' +
-      '*FORMA DE PAGAMENTO*' + '\n' +
-      '--------------------------------' + '\n' +
-      agent.parameters.Pagamento+'  '+troco +'\n'+'\n'+
-      '--------------------------------' + '\n' +
-      '*VALOR TOTAL:* R$'+Total + '\n' +
-      '--------------------------------' + '\n' + '\n' +
-      'Digite *FINALIZAR*, se estiver tudo certo' + '\n' +
-      'Digite *REINICIAR*, para refazer o pedido'+ '\n' +
-      'Digite *CANCELAR*, para cancelar o pedido '
-
-     )
-else
-agent.add('Antes de encaminharmos seu pedido, confirme se está tudo certinho:' + '\n' + '\n' +
-      '*PEDIDO PARA ENTREGA*' + '\n' + 
-      '*TEMPO ESTIMADO: 30 À 60 MINUTOS*' + '\n' + '\n' +
-      '--------------------------------' + '\n' +
-      '*ITENS DO PEDIDO*' + '\n' +
-      '--------------------------------' + '\n' + 
-      '*TIPO:* ' +agent.parameters.iPhome + '\n' +
-      '*NOME:* ' +agent.parameters.Nome + '\n' + 
-      '*BEBIDA:* ' +agent.parameters.Bebidas + '\n' +
-      '*MOLHOS:* ' +agent.parameters.Molhos1+'  '+agent.parameters.Molhos2+'  '+agent.parameters.Molhos3+'  '+agent.parameters.Molhos4+ '\n'+
-      '*PETISCOS:* ' +agent.parameters.pedidoPetisco1 + '  '+agent.parameters.pedidoPetisco2+'  '+agent.parameters.pedidoPetisco3+'  '+agent.parameters.Petiscos4+'  '+agent.parameters.Petiscos5+' '+agent.parameters.Petiscos6+'\n'+
-      '*ESPECIAIS:* ' +agent.parameters.Especiais +'\n'+
-      '*ENDEREÇO:* ' +agent.parameters.Local + '\n' + '\n' +
-      '--------------------------------' + '\n' +
-      '*FORMA DE PAGAMENTO*' + '\n' +
-      '--------------------------------' + '\n' +
-      agent.parameters.Pagamento+' '+troco +'\n'+'\n'+
-      '--------------------------------' + '\n' +
-      '*VALOR TOTAL:* R$'+Total + '\n' +
-      '--------------------------------' + '\n' + '\n' +
-      'Digite *FINALIZAR*, se estiver tudo certo' + '\n' +
-      'Digite *REINICIAR*, para refazer o pedido'+ '\n' +
-      'Digite *CANCELAR*, para cancelar o pedido'
-     )
-}
+      //PESQUISA
+   function consulta(agent) {    
+   var email = request.body.queryResult.parameters.consulta;
+  return axios.get("https://sheet.best/api/sheets/f5392bc1-db5c-4e34-9875-bc48b17af95f").then(res => {
+    res.data.map(coluna => {
+      if (coluna.Email === email)
+      response.json({
+        fulfillmentText:
+        "Muito bem..! " +
+        "\n" +
+        "Sr(a) " + coluna.Nome +
+        "\n" +
+        " O seu número da sorte é " + coluna.Numero +"\n" +"\n" + "Guarde esse número e *Boa Sorte!* 👩🏽‍🎤 👍🏼"
+      });
+    });
+    });
+   }
 
 module.exports = {
-  iphome,
-  welcome
+  cadastro,
+  welcome,
+  consulta
 }
