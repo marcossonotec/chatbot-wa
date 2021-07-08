@@ -1,5 +1,5 @@
 
-
+'use strict';
 
 function uniqueID(){
   function chr4(){
