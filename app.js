@@ -14,7 +14,7 @@ const port = process.env.PORT || 8000;
 const server = http.createServer(app);
 const io = socketIO(server);
 
-app.post('/webhook', function(request,response){
+app.post('./helpers/webhook', function(request,response){
   const agent = new WebhookClient ({ request, response });
       
       let intentMap = new Map();           
