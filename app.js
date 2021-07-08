@@ -16,10 +16,11 @@ const io = socketIO(server);
 
 app.post('/webhook', function(request,response){
   const agent = new WebhookClient ({ request, response });
-      let intentMap = new Map();
-      intentMap.set('dinheiroiphome7', iphome)
-      intentMap.set('cartaoiphome7', iphome)
-      intentMap.set('Default Welcome Intent', welcome)
+      
+      let intentMap = new Map();           
+      intentMap.set('Pesquisa', pesquisa);
+      intentMap.set('Default Welcome Intent', welcome);
+      intentMap.set('Cadastro', cadastro);
 
       agent.handleRequest(intentMap);
       }); 
@@ -37,7 +38,7 @@ app.use(fileUpload({
 }));
 
 const df = require('./helpers/dialogflow.js');
-const { iphome, welcome } = require('./helpers/webhook.js');
+const { pesquisa, welcome, cadastro } = require('./helpers/webhook.js');
 
 const SESSION_FILE_PATH = './whatsapp-session.json';
 let sessionCfg;
