@@ -1,9 +1,4 @@
 
-
-const webhook = require('helpers/webhook.js');
-
-'use strict';
-
 function uniqueID(){
   function chr4(){
     return Math.random().toString(16).slice(-6);
