@@ -8,6 +8,7 @@ const axios = require('axios');
 const fs = require('fs');
 const bodyParser = require('body-parser')
 const {WebhookClient} = require('dialogflow-fulfillment');
+const df = require("@google-cloud/dialogflow");
 const app = express();
 app.use(bodyParser.json())
 const port = process.env.PORT || 8000;
@@ -16,8 +17,7 @@ const io = socketIO(server);
 
 app.post('webhook', function(request,response){
   const agent = new WebhookClient ({ request, response });
-  console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
-  console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
+
       
       let intentMap = new Map();           
       intentMap.set('Pesquisa', consulta);
