@@ -18,7 +18,7 @@ app.post('/webhook', function(request,response){
   const agent = new WebhookClient ({ request, response });
       
       let intentMap = new Map();           
-      intentMap.set('Pesquisa', pesquisa);
+      intentMap.set('Pesquisa', consulta);
       intentMap.set('Default Welcome Intent', welcome);
       intentMap.set('Cadastro', cadastro);
 
@@ -38,7 +38,7 @@ app.use(fileUpload({
 }));
 
 const df = require('./helpers/dialogflow.js');
-const { pesquisa, welcome, cadastro } = require('./helpers/webhook.js');
+const { consulta, welcome, cadastro } = require('./helpers/webhook.js');
 
 const SESSION_FILE_PATH = './whatsapp-session.json';
 let sessionCfg;
