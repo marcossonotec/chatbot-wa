@@ -8,7 +8,6 @@ const axios = require('axios');
 const fs = require('fs');
 const bodyParser = require('body-parser')
 const {WebhookClient} = require('dialogflow-fulfillment');
-const dialogflow = require("@google-cloud/dialogflow");
 const app = express();
 app.use(bodyParser.json())
 const port = process.env.PORT || 8000;
@@ -27,7 +26,7 @@ app.post('webhook', function(request,response){
       agent.handleRequest(intentMap);
       }); 
 
-const webhook = require('./helpers/webhook.js');
+const webhook = require('helpers/webhook.js');
 webhook
 
 
@@ -39,8 +38,8 @@ app.use(fileUpload({
   debug: true
 }));
 
-const df = require('./helpers/dialogflow.js');
-const { consulta, welcome, cadastro } = require('./helpers/webhook.js');
+const df = require('helpers/dialogflow.js');
+const { consulta, welcome, cadastro } = require('helpers/webhook.js');
 
 const SESSION_FILE_PATH = './whatsapp-session.json';
 let sessionCfg;
