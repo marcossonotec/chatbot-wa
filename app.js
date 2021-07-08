@@ -14,7 +14,7 @@ const port = process.env.PORT || 8000;
 const server = http.createServer(app);
 const io = socketIO(server);
 
-app.post('./helpers/webhook', function(request,response){
+app.post('webhook', function(request,response){
   const agent = new WebhookClient ({ request, response });
       
       let intentMap = new Map();           
@@ -26,7 +26,7 @@ app.post('./helpers/webhook', function(request,response){
       }); 
 
 const webhook = require('./helpers/webhook.js');
-webhook
+//webhook
 
 
 app.use(express.json());
