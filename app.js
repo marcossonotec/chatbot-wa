@@ -8,7 +8,7 @@ const axios = require('axios');
 const fs = require('fs');
 const bodyParser = require('body-parser')
 const {WebhookClient} = require('dialogflow-fulfillment');
-const df = require("@google-cloud/dialogflow");
+const dialogflow = require("@google-cloud/dialogflow");
 const app = express();
 app.use(bodyParser.json())
 const port = process.env.PORT || 8000;
