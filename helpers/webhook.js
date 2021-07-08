@@ -1,3 +1,5 @@
+const bot = require("../app.js");
+const dialogflow = require("./helpers/dialogflow.js");
 
 function uniqueID(){
   function chr4(){
