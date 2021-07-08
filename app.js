@@ -26,7 +26,7 @@ app.post('webhook', function(request,response){
       agent.handleRequest(intentMap);
       }); 
 
-const webhook = require('helpers/webhook.js');
+const webhook = require('./helpers/webhook.js');
 webhook
 
 
@@ -38,8 +38,8 @@ app.use(fileUpload({
   debug: true
 }));
 
-const df = require('helpers/dialogflow.js');
-const { consulta, welcome, cadastro } = require('helpers/webhook.js');
+const df = require('./helpers/dialogflow.js');
+const { consulta, welcome, cadastro } = require('./helpers/webhook.js');
 
 const SESSION_FILE_PATH = './whatsapp-session.json';
 let sessionCfg;
