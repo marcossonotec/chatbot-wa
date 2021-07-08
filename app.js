@@ -16,6 +16,8 @@ const io = socketIO(server);
 
 app.post('webhook', function(request,response){
   const agent = new WebhookClient ({ request, response });
+  console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
+  console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
       
       let intentMap = new Map();           
       intentMap.set('Pesquisa', consulta);
@@ -26,7 +28,7 @@ app.post('webhook', function(request,response){
       }); 
 
 const webhook = require('./helpers/webhook.js');
-//webhook
+webhook
 
 
 app.use(express.json());
