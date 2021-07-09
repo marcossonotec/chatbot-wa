@@ -1,35 +1,31 @@
 const { Client, MessageMedia } = require('whatsapp-web.js');
 const express = require('express');
-const { body, validationResult } = require('express-validator');
 const socketIO = require('socket.io');
 const qrcode = require('qrcode');
 const http = require('http');
-const fs = require('fs');
 const fileUpload = require('express-fileupload');
 const axios = require('axios');
+const fs = require('fs');
 const bodyParser = require('body-parser')
 const {WebhookClient} = require('dialogflow-fulfillment');
-const dialogflow = require('@google-cloud/dialogflow');
 const app = express();
 app.use(bodyParser.json())
 const port = process.env.PORT || 8000;
-
 const server = http.createServer(app);
 const io = socketIO(server);
 
 app.post('/webhook', function(request,response){
   const agent = new WebhookClient ({ request, response });
 
-      
-      let intentMap = new Map();           
-      intentMap.set('Pesquisa', consulta);
-      intentMap.set('Default Welcome Intent', welcome);
-      intentMap.set('Cadastro', cadastro);
+  let intentMap = new Map();           
+  intentMap.set('Pesquisa', consulta);
+  intentMap.set('Default Welcome Intent', welcome);
+  intentMap.set('Cadastro', cadastro);
 
-      agent.handleRequest(intentMap);
-      }); 
+  agent.handleRequest(intentMap);
+  });
 
-const webhook = require('./helpers/webhook.js');
+const webhook = require('./helpers/webhook');
 webhook
 
 
@@ -41,8 +37,8 @@ app.use(fileUpload({
   debug: true
 }));
 
-const df = require('./helpers/dialogflow.js');
-const { consulta, welcome, cadastro } = require('./helpers/webhook.js');
+const df = require('./helpers/dialogflow');
+const { consulta, welcome, cadastro } = require('./helpers/webhook');
 
 const SESSION_FILE_PATH = './whatsapp-session.json';
 let sessionCfg;
@@ -89,13 +85,13 @@ if (fs.existsSync(SESSION_FILE_PATH)) {
 
   // Socket IO
   io.on('connection', function(socket) {
-    socket.emit('message', 'Connecting...');
+    socket.emit('message', 'Conectando...');
   
     client.on('qr', (qr) => {
       console.log('QR RECEIVED', qr);
       qrcode.toDataURL(qr, (err, url) => {
         socket.emit('qr', url);
-        socket.emit('message', 'QR Code received, scan please!');
+        socket.emit('message', 'QR Code criado, favor scaneie!');
       });
     });
   
