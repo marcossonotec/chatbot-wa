@@ -48,7 +48,7 @@ async function executeQueries(projectId, sessionId, queries, languageCode) {
             );
             console.log('Enviando Resposta');
             console.log(intentResponse.queryResult.fulfillmentText);
-            resposta = intentResponse.queryResult.fulfillmentText
+            //resposta = intentResponse.queryResult.fulfillmentText
             return `${intentResponse.queryResult.fulfillmentText}`
         } catch (error) {
             console.log(error);
