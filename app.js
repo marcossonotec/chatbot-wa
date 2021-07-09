@@ -84,16 +84,16 @@ if (fs.existsSync(SESSION_FILE_PATH)) {
   client.initialize();
 
   // Socket IO
-  io.on('connection', function(socket) {
-    socket.emit('message', 'Conectando...');
-  
-    client.on('qr', (qr) => {
-      console.log('QR RECEIVED', qr);
-      qrcode.toDataURL(qr, (err, url) => {
-        socket.emit('qr', url);
-        socket.emit('message', 'QR Code criado, favor scaneie!');
-      });
+io.on('connection', function(socket) {
+  socket.emit('message', 'Connecting...');
+
+  client.on('qr', (qr) => {
+    console.log('QR RECEIVED', qr);
+    qrcode.toDataURL(qr, (err, url) => {
+      socket.emit('qr', url);
+      socket.emit('message', 'QR Code received, scan please!');
     });
+  });
   
     client.on('ready', () => {
       socket.emit('ready', 'Whatsapp is ready!');
